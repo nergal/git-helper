@@ -1,0 +1,4 @@
+jira:
+  host: https://XXXX.atlassian.net
+  username: username@example.com
+  token: AAAAbbbbCCCCdddd

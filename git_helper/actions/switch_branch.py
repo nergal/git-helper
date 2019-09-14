@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from PyInquirer import prompt, Separator
+from PyInquirer import prompt
 from git import Repo, exc
-from pprint import pprint
 
 repo = Repo('.')
+
 
 def choose_branch_name():
     choises = list(map(lambda x: x.name, repo.heads))

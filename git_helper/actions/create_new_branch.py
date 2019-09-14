@@ -2,18 +2,23 @@
 from PyInquirer import prompt, Separator
 from jira import JIRA
 from git import Repo, exc
+import yaml
 
 repo = Repo('.')
 
+with open('config.yml', 'r') as config_file:
+    config = yaml.load(config_file, Loader=yaml.FullLoader)
+
 jira = JIRA(
-    'https://sportsdataproject.atlassian.net',
-    basic_auth=('apolyuhovich@luxoft.com', 'c1x3m7DDS73r5yRPeyhkCC8D')
+    config['jira']['host'],
+    basic_auth=(config['jira']['username'], config['jira']['token'])
 )
 
 
 def choose_branch_name():
     issues = jira.search_issues(
-        'project = WEB AND status != Done AND assignee in (currentUser()) ORDER BY priority DESC, updated DESC')
+        'status != Done AND assignee in (currentUser()) ORDER BY priority DESC, updated DESC'
+    )
     choises = list(map(lambda issue: '%s - %s' % (issue.key, issue.fields.summary), issues))
     choises.extend([Separator(), 'Add custom branch'])
 
