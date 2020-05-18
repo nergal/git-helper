@@ -6,7 +6,7 @@ from .common import get_current_branch, ask_confirm, switch_to_branch
 
 def choose_branch_name(jira):
     issues = jira.search_issues(
-        'status != Done AND assignee in (currentUser()) ORDER BY priority DESC, updated DESC'
+        'project = CATV AND statusCategory = 2 AND assignee in (currentUser()) ORDER BY priority DESC, updated DESC'
     )
     choises = list(map(lambda issue: '%s - %s' % (issue.key, issue.fields.summary), issues))
     choises.extend([Separator(), 'Add custom branch'])
